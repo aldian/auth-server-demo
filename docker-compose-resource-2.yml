@@ -1,0 +1,17 @@
+version: '3'
+services:
+  resource_server_2:
+    build:
+        context: .
+        dockerfile: Dockerfile
+    image: oauth2_server_demo
+    command: ./run_app.sh
+    volumes:
+      - .:/code
+    ports:
+      - "${RESOURCE_SERVER_2_WEB_EXTERNAL_PORT}:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=oauth2_server_demo.settings.resource_server_2
+      - AUTH_SERVER_INTROSPECTION_URL=http://auth-server.test:$OAUTH2_SERVER_WEB_EXTERNAL_PORT/o/introspect/
+    extra_hosts:
+      - auth-server.test:$DOCKER_0_HOST

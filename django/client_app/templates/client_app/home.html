@@ -1,0 +1,15 @@
+<a href="{{ authorization_url }}">Login to get a valid access token</a>
+<form method="post">
+    {% csrf_token %}
+    <table>
+    {{ form.as_table }}
+    </table>
+    <input type="submit" value="Access Resources">
+</form>
+<h3>Response from Resource Server 1:</h3>
+
+<p>{{ response_content_1 }}</p>
+
+<h3>Response from Resource Server 2:</h3>
+
+<p>{{ response_content_2 }}</p>

@@ -1,0 +1,26 @@
+version: '3'
+services:
+  client_app:
+    build:
+        context: .
+        dockerfile: Dockerfile
+    image: oauth2_server_demo
+    command: ./run_app.sh
+    volumes:
+      - .:/code
+    ports:
+      - "${CLIENT_APP_WEB_EXTERNAL_PORT}:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=oauth2_server_demo.settings.client_app
+      - AUTH_SERVER_AUTHORIZE_URL=http://localhost:$OAUTH2_SERVER_WEB_EXTERNAL_PORT/o/authorize
+      - AUTH_SERVER_TOKEN_URL=http://auth-server.test:$OAUTH2_SERVER_WEB_EXTERNAL_PORT/o/token/
+
+      - CLIENT_ID=$CLIENT_APP_ID
+      - CLIENT_SECRET=$CLIENT_APP_SECRET
+
+      - RESOURCE_SERVER_1_BASE_URL=http://resource-server-1.test:$RESOURCE_SERVER_1_WEB_EXTERNAL_PORT
+      - RESOURCE_SERVER_2_BASE_URL=http://resource-server-2.test:$RESOURCE_SERVER_2_WEB_EXTERNAL_PORT
+    extra_hosts:
+      - auth-server.test:$DOCKER_0_HOST
+      - resource-server-1.test:$DOCKER_0_HOST
+      - resource-server-2.test:$DOCKER_0_HOST
