@@ -67,6 +67,9 @@ CLIENT_ID and CLIENT_SECRET in the `.env` file:
 4. `Authorization grant type` is `Authorization code`.
 5. `Redirect uris` is `http://localhost:8003/auth/token/exchange/`.
 
+Once successful, the generated `Client ID` and `Client Secret` will be displayed:
+![alt Auth Server Client Add Form](https://s3.amazonaws.com/aldian-blog/oauth2_server_demo_client_id_generation.png)
+
 ### Installing the two Resource Servers
 
 run the containers:
@@ -89,7 +92,7 @@ $ docker-compose -f docker-compose-client.yml up
 
 Create another user of the Auth Server that represent a user that is using the Client App:
 1. Open http://localhost:8000/admin/auth/user/add/. If you are asked to login, please use the admin username that you have created before.
-2. Fill the username and password fields let's call this new user as `user1`.
+2. Fill the username and password fields. Let's call this new user as `user1`.
 3. Logout from the admin account.
 
 ## Run the Demo
@@ -101,5 +104,7 @@ Create another user of the Auth Server that represent a user that is using the C
 5. Now the `Access Token` field is filled with a valid value.
 6. Click `Access Resources`. If you see "Resource Server 1" and "Resource Server 2" texts are displayed, it means resources
    are successfully loaded from the two Resource Servers.
+   
+![alt Resources Loaded](https://s3.amazonaws.com/aldian-blog/oauth2_server_demo_successful.png)
 
 You can now do some experiments by changing or removing value of access token.
