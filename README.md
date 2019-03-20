@@ -77,7 +77,12 @@ $ docker-compose -f docker-compose-resource-2.yml up
 
 ### Installing the Client App
 
-run the container:
+Build the container and prepare session storage:
+```
+$ docker-compose -f docker-compose-client.yml build
+$ docker-compose -f docker-compose-client.yml run --rm client_app ./migrate_data.sh
+```
+Run the container:
 ```
 $ docker-compose -f docker-compose-client.yml up
 ```
