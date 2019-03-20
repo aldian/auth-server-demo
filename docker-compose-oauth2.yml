@@ -1,0 +1,31 @@
+version: '3'
+services:
+  oauth2_server_db:
+    image: postgres:11.2
+    volumes:
+      - oauth2_server_data:/var/lib/postgresql/data
+    ports:
+      - "${OAUTH2_SERVER_POSTGRES_EXTERNAL_PORT}:5432"
+
+  oauth2_server:
+    build:
+        context: .
+        dockerfile: Dockerfile
+    image: oauth2_server_demo
+    command: ./run_app.sh
+    volumes:
+      - .:/code
+    ports:
+      - "${OAUTH2_SERVER_WEB_EXTERNAL_PORT}:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=oauth2_server_demo.settings.auth_server
+      - DB_HOST=oauth2_server_db
+      - DB_USER=$OAUTH2_SERVER_POSTGRES_USER
+      - DB_PASSWORD=$OAUTH2_SERVER_POSTGRES_PASSWORD
+    depends_on:
+      - oauth2_server_db
+    links:
+      - oauth2_server_db
+
+volumes:
+  oauth2_server_data:
